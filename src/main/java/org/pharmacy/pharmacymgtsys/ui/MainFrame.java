@@ -1,11 +1,11 @@
 package org.pharmacy.pharmacymgtsys.ui;
 
-
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -16,12 +16,29 @@ public class MainFrame extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Pharmacy Management System");
         VBox vbox = new VBox(10.0);
-        vbox.setPadding(new Insets(10.0));
+        vbox.setPadding(new Insets(20.0));
+        vbox.setStyle("-fx-background-color: #f0f0f0;"); // Set background color
+
+        // Add a heading
+        Label heading = new Label("Pharmacy Management System");
+        heading.setStyle("-fx-font-size: 24px; -fx-font-weight: bold;");
+
         Button addDrugButton = new Button("Add Drug");
         Button viewDrugsButton = new Button("View Drugs");
         Button searchDrugButton = new Button("Search Drug");
         Button purchaseDrugButton = new Button("Purchase Drug");
         Button purchaseHistoryButton = new Button("View Purchase History");
+
+        // Add some space between the heading and the buttons
+        vbox.getChildren().addAll(heading, new Label(""), addDrugButton, viewDrugsButton, searchDrugButton, purchaseDrugButton, purchaseHistoryButton);
+
+        // Set button styles
+        addDrugButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        viewDrugsButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        searchDrugButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        purchaseDrugButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        purchaseHistoryButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+
         addDrugButton.setOnAction((e) -> {
             (new AddDrugFrame()).start(new Stage());
         });
@@ -37,7 +54,7 @@ public class MainFrame extends Application {
         purchaseHistoryButton.setOnAction((e) -> {
             (new PurchaseHistoryFrame()).start(new Stage());
         });
-        vbox.getChildren().addAll(new Node[]{addDrugButton, viewDrugsButton, searchDrugButton, purchaseDrugButton, purchaseHistoryButton});
+
         Scene scene = new Scene(vbox, 800.0, 600.0);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -47,4 +64,3 @@ public class MainFrame extends Application {
         launch(args);
     }
 }
-
