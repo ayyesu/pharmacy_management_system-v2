@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -16,6 +17,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.pharmacy.pharmacymgtsys.dao.DrugDAO;
 import org.pharmacy.pharmacymgtsys.dao.PurchaseDAO;
@@ -29,90 +32,118 @@ public class PurchaseFrame extends Application {
     public PurchaseFrame() {
     }
 
+    @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Purchase Drug");
-        VBox vbox = new VBox(10.0);
-        vbox.setPadding(new Insets(10.0));
+
+        // Create and style the main container
+        VBox vbox = new VBox(20);
+        vbox.setPadding(new Insets(20));
+        vbox.setStyle("-fx-background-color: #f0f4f7;");
+        vbox.setAlignment(Pos.CENTER);
+
+        // Create and style the grid layout for the form
         GridPane grid = new GridPane();
-        grid.setPadding(new Insets(10.0));
-        grid.setHgap(10.0);
-        grid.setVgap(10.0);
+        grid.setPadding(new Insets(20));
+        grid.setHgap(15);
+        grid.setVgap(15);
+        grid.setAlignment(Pos.CENTER);
+
+        // Create and style the form fields and labels
         Label nameLabel = new Label("Drug Name:");
-        grid.add(nameLabel, 0, 0);
-        ComboBox<String> drugComboBox = new ComboBox();
-        grid.add(drugComboBox, 1, 0);
+        nameLabel.setFont(Font.font("Verdana", 14));
+        nameLabel.setTextFill(Color.web("#333"));
+        ComboBox<String> drugComboBox = new ComboBox<>();
+        drugComboBox.setPromptText("Select a drug");
 
         try {
-            List<Drug> drugs = this.drugDAO.getAllDrugs();
-            Iterator var15 = drugs.iterator();
-
-            while(var15.hasNext()) {
-                Drug drug = (Drug)var15.next();
+            List<Drug> drugs = drugDAO.getAllDrugs();
+            for (Drug drug : drugs) {
                 drugComboBox.getItems().add(drug.getDrugName());
             }
-        } catch (SQLException var12) {
-            SQLException e = var12;
-            Alert alert = new Alert(AlertType.ERROR, "Error loading drugs: " + e.getMessage(), new ButtonType[0]);
-            alert.showAndWait();
+        } catch (SQLException e) {
+            showAlert(AlertType.ERROR, "Database Error", "Error loading drugs: " + e.getMessage());
         }
 
         Label qtyLabel = new Label("Quantity:");
-        grid.add(qtyLabel, 0, 1);
+        qtyLabel.setFont(Font.font("Verdana", 14));
+        qtyLabel.setTextFill(Color.web("#333"));
         TextField qtyField = new TextField();
-        grid.add(qtyField, 1, 1);
-        Label customerNameLabel = new Label("Customer Name:");
-        grid.add(customerNameLabel, 0, 2);
-        TextField customerNameField = new TextField();
-        grid.add(customerNameField, 1, 2);
-        Button purchaseButton = new Button("Purchase");
-        grid.add(purchaseButton, 1, 3);
-        purchaseButton.setOnAction((ex) -> {
-            String drugName = (String)drugComboBox.getValue();
-            String customerName = customerNameField.getText();
+        qtyField.setFont(Font.font("Verdana", 14));
+        qtyField.setPromptText("Enter quantity");
 
+        Label customerNameLabel = new Label("Customer Name:");
+        customerNameLabel.setFont(Font.font("Verdana", 14));
+        customerNameLabel.setTextFill(Color.web("#333"));
+        TextField customerNameField = new TextField();
+        customerNameField.setFont(Font.font("Verdana", 14));
+        customerNameField.setPromptText("Enter customer name");
+
+        // Create and style the purchase button
+        Button purchaseButton = new Button("Purchase");
+        purchaseButton.setFont(Font.font("Verdana", 14));
+        purchaseButton.setStyle("-fx-background-color: #007bff; -fx-text-fill: white; -fx-padding: 8 15 8 15;");
+
+        // Add form fields and button to the grid
+        grid.add(nameLabel, 0, 0);
+        grid.add(drugComboBox, 1, 0);
+        grid.add(qtyLabel, 0, 1);
+        grid.add(qtyField, 1, 1);
+        grid.add(customerNameLabel, 0, 2);
+        grid.add(customerNameField, 1, 2);
+        grid.add(purchaseButton, 1, 3);
+
+        // Add grid to the VBox
+        vbox.getChildren().add(grid);
+
+        // Set button action
+        purchaseButton.setOnAction(e -> {
+            String drugName = drugComboBox.getValue();
+            String customerName = customerNameField.getText();
             int quantity;
-            Alert alert;
+
             try {
                 quantity = Integer.parseInt(qtyField.getText());
-            } catch (NumberFormatException var11) {
-                alert = new Alert(AlertType.ERROR, "Invalid quantity.", new ButtonType[0]);
-                alert.showAndWait();
+            } catch (NumberFormatException ex) {
+                showAlert(AlertType.ERROR, "Input Error", "Invalid quantity.");
                 return;
             }
 
             try {
-                Drug drug = this.drugDAO.getDrugByName(drugName);
+                Drug drug = drugDAO.getDrugByName(drugName);
                 if (drug != null && drug.getStock() >= quantity) {
                     drug.setStock(drug.getStock() - quantity);
-                    this.drugDAO.updateDrug(drug);
+                    drugDAO.updateDrug(drug);
                     Purchase purchase = new Purchase();
                     purchase.setDrugId(drug.getDrugId());
                     purchase.setCustomerName(customerName);
                     purchase.setPurchaseDate(LocalDateTime.now());
                     purchase.setQuantity(quantity);
-                    purchase.setTotalPrice(drug.getPrice() * (double)quantity);
-                    this.purchaseDAO.addPurchase(purchase);
-                    Alert alertx = new Alert(AlertType.INFORMATION, "Purchase successful!", new ButtonType[0]);
-                    alertx.showAndWait();
+                    purchase.setTotalPrice(drug.getPrice() * quantity);
+                    purchaseDAO.addPurchase(purchase);
+                    showAlert(AlertType.INFORMATION, "Success", "Purchase successful!");
                 } else {
-                    alert = new Alert(AlertType.ERROR, "Not enough stock available or drug not found.", new ButtonType[0]);
-                    alert.showAndWait();
+                    showAlert(AlertType.ERROR, "Stock Error", "Not enough stock available or drug not found.");
                 }
-            } catch (SQLException var12) {
-                SQLException exx = var12;
-                alert = new Alert(AlertType.ERROR, "Error processing purchase: " + exx.getMessage(), new ButtonType[0]);
-                alert.showAndWait();
+            } catch (SQLException ex) {
+                showAlert(AlertType.ERROR, "Database Error", "Error processing purchase: " + ex.getMessage());
             }
-
         });
-        vbox.getChildren().add(grid);
-        Scene scene = new Scene(vbox, 400.0, 250.0);
+
+        // Create and set the scene
+        Scene scene = new Scene(vbox, 450, 350);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    private void showAlert(AlertType alertType, String title, String message) {
+        Alert alert = new Alert(alertType, message, ButtonType.OK);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.showAndWait();
     }
 
     public static void main(String[] args) {
         launch(args);
     }
 }
-
