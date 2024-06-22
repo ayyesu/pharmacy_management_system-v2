@@ -1,0 +1,29 @@
+/* style.css */
+
+.table-view {
+    -fx-font-size: 14px;
+    -fx-font-family: "Verdana";
+    -fx-alignment: CENTER-LEFT;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #007bff;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+}
+
+.table-view .table-cell {
+    -fx-border-color: #e0e0e0;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #f9f9f9;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #007bff;
+    -fx-text-fill: white;
+}

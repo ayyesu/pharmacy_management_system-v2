@@ -18,56 +18,63 @@ import javafx.stage.Stage;
 import org.pharmacy.pharmacymgtsys.dao.PurchaseDAO;
 import org.pharmacy.pharmacymgtsys.model.Purchase;
 
-
 public class PurchaseHistoryFrame extends Application {
     private PurchaseDAO purchaseDAO = new PurchaseDAO();
 
     public PurchaseHistoryFrame() {
     }
 
+    @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Purchase History");
-        VBox vbox = new VBox(10.0);
-        vbox.setPadding(new Insets(10.0));
-        TableView<Purchase> tableView = new TableView();
-        TableColumn<Purchase, Integer> idColumn = new TableColumn("ID");
-        idColumn.setCellValueFactory((cellData) -> {
-            return (new SimpleIntegerProperty(((Purchase)cellData.getValue()).getPurchaseId())).asObject();
-        });
-        TableColumn<Purchase, String> drugNameColumn = new TableColumn("Drug Name");
-        drugNameColumn.setCellValueFactory((cellData) -> {
-            return new SimpleStringProperty(((Purchase)cellData.getValue()).getDrugName());
-        });
-        TableColumn<Purchase, String> customerNameColumn = new TableColumn("Customer Name");
-        customerNameColumn.setCellValueFactory((cellData) -> {
-            return new SimpleStringProperty(((Purchase)cellData.getValue()).getCustomerName());
-        });
-        TableColumn<Purchase, Integer> quantityColumn = new TableColumn("Quantity");
-        quantityColumn.setCellValueFactory((cellData) -> {
-            return (new SimpleIntegerProperty(((Purchase)cellData.getValue()).getQuantity())).asObject();
-        });
-        TableColumn<Purchase, Double> totalPriceColumn = new TableColumn("Total Price");
-        totalPriceColumn.setCellValueFactory((cellData) -> {
-            return (new SimpleDoubleProperty(((Purchase)cellData.getValue()).getTotalPrice())).asObject();
-        });
-        TableColumn<Purchase, String> dateColumn = new TableColumn("Date");
-        dateColumn.setCellValueFactory((cellData) -> {
-            return new SimpleStringProperty(((Purchase)cellData.getValue()).getPurchaseDate().toString());
-        });
-        tableView.getColumns().addAll(new TableColumn[]{idColumn, drugNameColumn, customerNameColumn, quantityColumn, totalPriceColumn, dateColumn});
 
+        // Create and style the main container
+        VBox vbox = new VBox(20);
+        vbox.setPadding(new Insets(20));
+        vbox.setStyle("-fx-background-color: #f0f4f7;");
+
+        // Create and style the TableView
+        TableView<Purchase> tableView = new TableView<>();
+        tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableView.setStyle("-fx-background-color: white; -fx-text-background-color: #333;");
+
+        // Create and style the table columns
+        TableColumn<Purchase, Integer> idColumn = new TableColumn<>("ID");
+        idColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getPurchaseId()).asObject());
+
+        TableColumn<Purchase, String> drugNameColumn = new TableColumn<>("Drug Name");
+        drugNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDrugName()));
+
+        TableColumn<Purchase, String> customerNameColumn = new TableColumn<>("Customer Name");
+        customerNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCustomerName()));
+
+        TableColumn<Purchase, Integer> quantityColumn = new TableColumn<>("Quantity");
+        quantityColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getQuantity()).asObject());
+
+        TableColumn<Purchase, Double> totalPriceColumn = new TableColumn<>("Total Price");
+        totalPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTotalPrice()).asObject());
+
+        TableColumn<Purchase, String> dateColumn = new TableColumn<>("Date");
+        dateColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPurchaseDate().toString()));
+
+        tableView.getColumns().addAll(idColumn, drugNameColumn, customerNameColumn, quantityColumn, totalPriceColumn, dateColumn);
+
+        // Fetch and add the data to the table
         try {
-            List<Purchase> purchases = this.purchaseDAO.getAllPurchases();
+            List<Purchase> purchases = purchaseDAO.getAllPurchases();
             tableView.getItems().addAll(purchases);
-        } catch (SQLException var12) {
-            SQLException e = var12;
+        } catch (SQLException e) {
             e.printStackTrace();
-            Alert alert = new Alert(AlertType.ERROR, "Error loading purchase history: " + e.getMessage(), new ButtonType[0]);
+            Alert alert = new Alert(AlertType.ERROR, "Error loading purchase history: " + e.getMessage(), ButtonType.OK);
             alert.showAndWait();
         }
 
+        // Add the table to the VBox
         vbox.getChildren().add(tableView);
-        Scene scene = new Scene(vbox, 800.0, 600.0);
+
+        // Create and set the scene
+        Scene scene = new Scene(vbox, 900, 600);
+        scene.getStylesheets().add("file:src/main/resources/css/style.css");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
@@ -76,4 +83,3 @@ public class PurchaseHistoryFrame extends Application {
         launch(args);
     }
 }
-
