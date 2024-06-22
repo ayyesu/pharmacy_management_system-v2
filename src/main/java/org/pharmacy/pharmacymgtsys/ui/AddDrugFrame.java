@@ -57,7 +57,7 @@ public class AddDrugFrame extends Application {
         descField.setFont(Font.font("Verdana", 14));
         descField.setPromptText("Enter drug description");
 
-        Label priceLabel = new Label("Price:");
+        Label priceLabel = new Label("Price(GH₵):");
         priceLabel.setFont(Font.font("Verdana", 14));
         priceLabel.setTextFill(Color.web("#333"));
         TextField priceField = new TextField();

@@ -19,30 +19,36 @@ public class DrugDAO {
         Connection conn = DatabaseConnection.getConnection();
 
         try {
-            String query = "INSERT INTO drugs (drug_name, description, price, stock) VALUES (?, ?, ?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(query);
+            // Check if the drug already exists
+            String checkQuery = "SELECT stock FROM drugs WHERE drug_name = ?";
+            PreparedStatement checkStmt = conn.prepareStatement(checkQuery);
+            checkStmt.setString(1, drug.getDrugName());
 
-            try {
-                stmt.setString(1, drug.getDrugName());
-                stmt.setString(2, drug.getDescription());
-                stmt.setDouble(3, drug.getPrice());
-                stmt.setInt(4, drug.getStock());
-                stmt.executeUpdate();
-            } catch (Throwable var9) {
-                if (stmt != null) {
-                    try {
-                        stmt.close();
-                    } catch (Throwable var8) {
-                        var9.addSuppressed(var8);
-                    }
-                }
-
-                throw var9;
+            ResultSet rs = checkStmt.executeQuery();
+            if (rs.next()) {
+                // Drug exists, update the stock
+                int currentStock = rs.getInt("stock");
+                int newStock = currentStock + drug.getStock();
+                String updateQuery = "UPDATE drugs SET stock = ? WHERE drug_name = ?";
+                PreparedStatement updateStmt = conn.prepareStatement(updateQuery);
+                updateStmt.setInt(1, newStock);
+                updateStmt.setString(2, drug.getDrugName());
+                updateStmt.executeUpdate();
+                updateStmt.close();
+            } else {
+                // Drug doesn't exist, insert a new record
+                String insertQuery = "INSERT INTO drugs (drug_name, description, price, stock) VALUES (?, ?, ?, ?)";
+                PreparedStatement insertStmt = conn.prepareStatement(insertQuery);
+                insertStmt.setString(1, drug.getDrugName());
+                insertStmt.setString(2, drug.getDescription());
+                insertStmt.setDouble(3, drug.getPrice());
+                insertStmt.setInt(4, drug.getStock());
+                insertStmt.executeUpdate();
+                insertStmt.close();
             }
 
-            if (stmt != null) {
-                stmt.close();
-            }
+            checkStmt.close();
+            rs.close();
         } catch (Throwable var10) {
             if (conn != null) {
                 try {
@@ -51,14 +57,12 @@ public class DrugDAO {
                     var10.addSuppressed(var7);
                 }
             }
-
             throw var10;
         }
 
         if (conn != null) {
             conn.close();
         }
-
     }
 
     public List<Drug> getAllDrugs() throws SQLException {

@@ -51,7 +51,7 @@ public class PurchaseHistoryFrame extends Application {
         TableColumn<Purchase, Integer> quantityColumn = new TableColumn<>("Quantity");
         quantityColumn.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getQuantity()).asObject());
 
-        TableColumn<Purchase, Double> totalPriceColumn = new TableColumn<>("Total Price");
+        TableColumn<Purchase, Double> totalPriceColumn = new TableColumn<>("Total Price (GH₵)");
         totalPriceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getTotalPrice()).asObject());
 
         TableColumn<Purchase, String> dateColumn = new TableColumn<>("Date");

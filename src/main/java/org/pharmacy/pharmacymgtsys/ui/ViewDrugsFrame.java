@@ -48,7 +48,7 @@ public class ViewDrugsFrame extends Application {
         TableColumn<Drug, String> descColumn = new TableColumn<>("Description");
         descColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescription()));
 
-        TableColumn<Drug, Double> priceColumn = new TableColumn<>("Price");
+        TableColumn<Drug, Double> priceColumn = new TableColumn<>("Price (GH₵)");
         priceColumn.setCellValueFactory(cellData -> new SimpleDoubleProperty(cellData.getValue().getPrice()).asObject());
 
         TableColumn<Drug, Integer> stockColumn = new TableColumn<>("Stock");

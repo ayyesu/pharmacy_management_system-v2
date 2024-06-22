@@ -80,7 +80,7 @@ public class SearchDrugFrame extends Application {
                     resultArea.setText(
                             "Name: " + drug.getDrugName() + "\n" +
                                     "Description: " + drug.getDescription() + "\n" +
-                                    "Price: " + drug.getPrice() + "\n" +
+                                    "Price (GH₵): " + drug.getPrice() + "\n" +
                                     "Stock: " + drug.getStock()
                     );
                 } else {
