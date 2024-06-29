@@ -2,7 +2,6 @@ package org.pharmacy.pharmacymgtsys.ui;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Iterator;
 import java.util.List;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -25,6 +24,14 @@ import org.pharmacy.pharmacymgtsys.dao.PurchaseDAO;
 import org.pharmacy.pharmacymgtsys.model.Drug;
 import org.pharmacy.pharmacymgtsys.model.Purchase;
 
+
+/**
+ * This is the Purchase Drug Frame.
+ * It represents the UI to Purchase drugs
+ *
+ * @author Daniel, jonathan, Hannah, felix, Martin, Bright
+ * @version 1.0
+ */
 public class PurchaseFrame extends Application {
     private DrugDAO drugDAO = new DrugDAO();
     private PurchaseDAO purchaseDAO = new PurchaseDAO();

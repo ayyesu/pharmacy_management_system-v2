@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -17,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -25,8 +23,21 @@ import javafx.stage.Stage;
 import org.pharmacy.pharmacymgtsys.dao.UserDAO;
 import org.pharmacy.pharmacymgtsys.ui.WelcomeScreenFrame;
 
+/**
+ * This represents the Login Frame.
+ * It provides an interface for user validation.
+ *
+ * @author Daniel, jonathan, Hannah, felix, Martin, Bright
+ * @version 1.0
+ */
 public class LoginFrame extends Application {
+    /**
+     * This represents username gotten from the user.
+     */
     private TextField usernameField;
+    /**
+     * This represents password gotten from the user.
+     */
     private PasswordField passwordField;
 
     public LoginFrame() {

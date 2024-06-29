@@ -7,12 +7,25 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+
+/**
+ * This is where Database Connection is initiated
+ * It connects to MySQL database using jdbc
+ *
+ * @author Daniel, jonathan, Hannah, felix, Martin, Bright
+ * @version 1.0
+ */
 public class DatabaseConnection {
     private static Connection connection = null;
 
     public DatabaseConnection() {
     }
 
+    /**
+     * This method gets database properties
+     * from resources/db.properties and
+     * initiates the connection
+     */
     public static Connection getConnection() throws SQLException {
         if (connection != null && !connection.isClosed()) {
             return connection;

@@ -5,7 +5,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * This is the Data Access Object for the Users
+ * It provides and controls the User data
+ *
+ * @author Daniel, jonathan, Hannah, felix, Martin, Bright
+ * @version 1.0
+ */
 public class UserDAO {
+    /**
+     * This method creates an instance of a purchase by a customer (simulated)
+     *
+     * @param username Represents the username received from the user.
+     * @param password Represents the password received from the user.
+     */
     public boolean validateUser(String username, String password) throws SQLException {
         Connection conn = DatabaseConnection.getConnection();
 

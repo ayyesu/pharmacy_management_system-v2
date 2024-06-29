@@ -1,5 +1,12 @@
 package org.pharmacy.pharmacymgtsys.model;
 
+/**
+ * This is the User model.
+ * It represents and provides various methods to access and manage users
+ *
+ * @author Daniel, jonathan, Hannah, felix, Martin, Bright
+ * @version 1.0
+ */
 public class User {
     private String username;
     private String password;

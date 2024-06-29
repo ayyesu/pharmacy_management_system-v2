@@ -2,6 +2,13 @@ package org.pharmacy.pharmacymgtsys.model;
 
 import java.time.LocalDateTime;
 
+/**
+ * This is the Purchase model.
+ * It represents and provides various methods to manage and make purchases
+ *
+ * @author Daniel, jonathan, Hannah, felix, Martin, Bright
+ * @version 1.0
+ */
 public class Purchase {
     private int purchaseId;
     private int drugId;

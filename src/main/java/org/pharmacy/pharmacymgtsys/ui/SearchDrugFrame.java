@@ -21,6 +21,13 @@ import javafx.stage.Stage;
 import org.pharmacy.pharmacymgtsys.dao.DrugDAO;
 import org.pharmacy.pharmacymgtsys.model.Drug;
 
+/**
+ * This is the Search Drug Frame.
+ * It represents the UI to search for drugs
+ *
+ * @author Daniel, jonathan, Hannah, felix, Martin, Bright
+ * @version 1.0
+ */
 public class SearchDrugFrame extends Application {
     private DrugDAO drugDAO = new DrugDAO();
 

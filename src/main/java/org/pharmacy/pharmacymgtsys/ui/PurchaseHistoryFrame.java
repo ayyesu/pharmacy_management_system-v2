@@ -18,6 +18,13 @@ import javafx.stage.Stage;
 import org.pharmacy.pharmacymgtsys.dao.PurchaseDAO;
 import org.pharmacy.pharmacymgtsys.model.Purchase;
 
+/**
+ * This is the Purchase History Frame.
+ * It represents the UI to view purchase history of drugs
+ *
+ * @author Daniel, jonathan, Hannah, felix, Martin, Bright
+ * @version 1.0
+ */
 public class PurchaseHistoryFrame extends Application {
     private PurchaseDAO purchaseDAO = new PurchaseDAO();
 

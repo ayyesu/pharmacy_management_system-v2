@@ -11,10 +11,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * This is the Data Access Object for the Drugs
+ * It provides and controls the drug data
+ *
+ * @author Daniel, jonathan, Hannah, felix, Martin, Bright
+ * @version 1.0
+ */
 public class DrugDAO {
     public DrugDAO() {
     }
 
+    /**
+     * This method gets adds drugs to the record in the database.
+     * If drug already exists the stock is updated by adding existing/previous
+     * stock value to the new stock value
+     *
+     * @param drug represents the drug objects
+     */
     public void addDrug(Drug drug) throws SQLException {
         Connection conn = DatabaseConnection.getConnection();
 
@@ -65,6 +79,11 @@ public class DrugDAO {
         }
     }
 
+    /**
+     * This method gets all drugs record in the database and stores it in an ArrayList
+     *
+     * @return It returns all drug records from an ArrayList
+     */
     public List<Drug> getAllDrugs() throws SQLException {
         List<Drug> drugs = new ArrayList();
         Connection conn = DatabaseConnection.getConnection();
@@ -135,6 +154,9 @@ public class DrugDAO {
         return drugs;
     }
 
+    /**
+     * @deprecated
+     */
     public Drug getDrugById(int drugId) throws SQLException {
         Drug drug = null;
         Connection conn = DatabaseConnection.getConnection();
@@ -205,6 +227,13 @@ public class DrugDAO {
         return drug;
     }
 
+    /**
+     * This method takes a name and returns the drug from the database
+     *
+     * @param drugName This represents the name of the drug that needs to be fetched fom the database
+     *
+     * @return If drug exists we return the drug object else an exception is thrown
+     */
     public Drug getDrugByName(String drugName) throws SQLException {
         Drug drug = null;
         Connection conn = DatabaseConnection.getConnection();
@@ -275,6 +304,12 @@ public class DrugDAO {
         return drug;
     }
 
+    /**
+     * This method takes a drug objects and updates the drug field in the database
+     *
+     * @param drug This represents the drug object to be updated
+     *
+     */
     public void updateDrug(Drug drug) throws SQLException {
         Connection conn = DatabaseConnection.getConnection();
 

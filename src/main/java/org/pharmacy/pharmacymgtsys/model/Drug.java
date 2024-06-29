@@ -1,5 +1,12 @@
 package org.pharmacy.pharmacymgtsys.model;
 
+/**
+ * This is the Drug model.
+ * It represents and provides various methods to access and use drugs
+ *
+ * @author Daniel, jonathan, Hannah, felix, Martin, Bright
+ * @version 1.0
+ */
 public class Drug {
     private int drugId;
     private String drugName;

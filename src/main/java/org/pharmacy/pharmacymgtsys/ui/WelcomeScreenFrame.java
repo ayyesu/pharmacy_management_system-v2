@@ -3,7 +3,6 @@ package org.pharmacy.pharmacymgtsys.ui;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,6 +12,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * This is the Welcome screen Frame.
+ * It represents the UI to Welcome the user
+ *
+ * @author Daniel, jonathan, Hannah, felix, Martin, Bright
+ * @version 1.0
+ */
 public class WelcomeScreenFrame extends Application {
     public WelcomeScreenFrame() {
     }

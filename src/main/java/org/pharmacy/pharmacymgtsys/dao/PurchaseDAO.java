@@ -10,11 +10,22 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * This is the Data Access Object for the Purchase
+ * It provides and controls the Purchase data
+ *
+ * @author Daniel, jonathan, Hannah, felix, Martin, Bright
+ * @version 1.0
+ */
 public class PurchaseDAO {
     public PurchaseDAO() {
     }
 
+    /**
+     * This method creates an instance of a purchase by a customer (simulated)
+     *
+     * @param purchase Represents the purchase object.
+     */
     public void addPurchase(Purchase purchase) throws SQLException {
         Connection conn = DatabaseConnection.getConnection();
 
@@ -62,6 +73,9 @@ public class PurchaseDAO {
 
     }
 
+    /**
+     * @deprecated
+     */
     public List<Purchase> getPurchasesByDrugId(int drugId) throws SQLException {
         List<Purchase> purchases = new ArrayList();
         String query = "SELECT * FROM purchases WHERE drug_id = ? ORDER BY purchase_date DESC";
@@ -118,6 +132,11 @@ public class PurchaseDAO {
         return purchases;
     }
 
+    /**
+     * This method gets all purchase record in the database and stores it in an ArrayList
+     *
+     * @return It returns all purchase records from an ArrayList
+     */
     public List<Purchase> getAllPurchases() throws SQLException {
         List<Purchase> purchases = new ArrayList();
         String query = "SELECT p.purchase_id, p.drug_id, p.customer_name, p.purchase_date, p.quantity, p.total_price, d.drug_name AS drug_name FROM purchases p JOIN drugs d ON p.drug_id = d.drug_id ORDER BY p.purchase_date DESC";

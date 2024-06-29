@@ -8,6 +8,13 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * This is the Main Frame.
+ * It represents the UI to Main Frame that provides pharmacy mgt features
+ *
+ * @author Daniel, jonathan, Hannah, felix, Martin, Bright
+ * @version 1.0
+ */
 public class MainFrame extends Application {
     public MainFrame() {
     }
